@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/WEB-INF/templates/basicTemplate.xhtml">
+
+	<ui:define name="metadata">
+	</ui:define>
+	<ui:define name="content">
+		<style type="text/css">
+			.ui-steps .ui-steps-item { width: 12%; }
+			.ui-state-highlight { text-shadow: none !important; }
+			.ui-steps.custom {	margin-bottom: 30px;}
+			.ui-steps.custom .ui-steps-item .ui-menuitem-link { height: 10px; padding: 0 1em; }
+			.ui-steps.custom .ui-steps-item .ui-steps-number {
+				background-color: #0081c2;
+				color: #FFFFFF;
+				display: inline-block;
+				width: 20px;
+				border-radius: 10px;
+				margin-top: -10px;
+				margin-bottom: 10px;
+			}
+		</style>
+		<h3>#{msg['flow.step0']}</h3>
+		<p:steps activeIndex="0" styleClass="custom" readonly="false">
+			<p:menuitem value="#{msg['flow.step1']}" url="#" />
+			<p:menuitem value="#{msg['flow.step2']}" url="#" />
+			<p:menuitem value="#{msg['flow.step3']}" url="#" />
+			<p:menuitem value="#{msg['flow.step4']}" url="#" />
+			<p:menuitem value="#{msg['flow.step5']}" url="#" />
+			<p:menuitem value="#{msg['flow.step6']}" url="#" />
+			<p:menuitem value="#{msg['flow.step7']}" url="#" />
+			<p:menuitem value="#{msg['flow.step8']}" url="#" />
+		</p:steps>
+		<br /><br />
+		
+		<h:form>
+			<p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}"
+				mode="advanced" dragDropSupport="false" update="messages"
+				sizeLimit="100000" fileLimit="3"
+				allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+			<p:growl id="messages" showDetail="true" />
+		</h:form>
+	</ui:define>
+</ui:composition>
