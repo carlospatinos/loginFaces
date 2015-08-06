@@ -1,47 +1,137 @@
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
 	template="/WEB-INF/templates/basicTemplate.xhtml">
 
-	<ui:define name="metadata">
+	<ui:define name="extraHead">
+		<script name="jquery/jquery.js" library="primefaces"></script>
+		<script>
+			function next() {
+				console.log('next');
+				PF('wizard').next();
+			}
+
+			function back() {
+				console.log('back');
+				PF('wizard').back();
+			}
+		</script>
 	</ui:define>
+
+
 	<ui:define name="content">
-		<p:tooltip />
 
-		<h:form>
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
+		<style type="text/css">
+.ui-steps .ui-steps-item {
+	width: 11.1%;
+}
 
-			<p:commandButton value="Info" actionListener="#{messagesView.info}" />
-			<p:commandButton value="Warn" actionListener="#{messagesView.warn}" />
-			<p:commandButton value="Error" actionListener="#{messagesView.error}" />
-			<p:commandButton value="Fatal" actionListener="#{messagesView.fatal}" />
-		</h:form>
+.ui-state-highlight {
+	text-shadow: none !important;
+}
 
-		<p:separator />
+.ui-steps.custom {
+	margin-bottom: 30px;
+}
 
-		<h:form>
-			<h:panelGrid id="grid" columns="3" cellpadding="5">
-				<p:outputLabel for="default" value="Default:" />
-				<p:inputText id="default" required="true" />
-				<p:message for="default" />
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+}
 
-				<p:outputLabel for="txt" value="Text:" />
-				<p:inputText id="txt" required="true" />
-				<p:message for="txt" display="text" />
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+	background-color: #0081c2;
+	color: #FFFFFF;
+	display: inline-block;
+	width: 20px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+</style>
+		<h3>#{msg['flow.step0']}</h3>
+		<p:steps activeIndex="0" styleClass="custom" readonly="false">
+			<p:menuitem value="#{msg['flow.step1']}" url="#" />
+			<p:menuitem value="#{msg['flow.step2']}" url="#" />
+			<p:menuitem value="#{msg['flow.step3']}" url="#" />
+			<p:menuitem value="#{msg['flow.step4']}" url="#" />
+			<p:menuitem value="#{msg['flow.step5']}" url="#" />
+			<p:menuitem value="#{msg['flow.step6']}" url="#" />
+			<p:menuitem value="#{msg['flow.step7']}" url="#" />
+			<p:menuitem value="#{msg['flow.step8']}" url="#" />
+			<p:menuitem value="#{msg['flow.step9']}" url="#" />
+		</p:steps>
+		<br />
+		<br />
+		<br />
+		<br />
+		<div style="width: 500px">
+			<p:growl id="messages" showDetail="true" />
+			<input value="Next" type="button" onclick="next();" /> 
+			<input value="Prev" type="button" onclick="back();" />
+			<p:wizard widgetVar="wizard"
+				flowListener="#{tutorialRegistrationBean.flowListener}"
+				showNavBar="false">
+				<p:tab id="tutorialBasicInformation">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Tutorial Name:" />
+						<h:inputText
+							value="#{tutorialRegistrationBean.tutorial.tutorialName}"></h:inputText>
+						<p:outputLabel value="Tutorial Instructor:" />
+						<h:inputText
+							value="#{tutorialRegistrationBean.tutorial.tutorialInstructor}"></h:inputText>
+						<p:outputLabel value="Tutorial Period:" />
+						<h:inputText
+							value="#{tutorialRegistrationBean.tutorial.tutorialPeriod}"></h:inputText>
+						<p:outputLabel value="file:" />
+						<p:fileUpload
+							fileUploadListener="#{fileUploadView.handleFileUpload}"
+							mode="advanced" dragDropSupport="false" update="messages"
+							sizeLimit="100000" fileLimit="3"
+							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
-				<p:outputLabel for="icon" value="Icon:" />
-				<p:inputText id="icon" required="true" />
-				<p:message for="icon" display="icon" />
 
-				<p:outputLabel for="tt" value="Tooltip:" />
-				<p:inputText id="tt" required="true" />
-				<p:message for="tt" display="tooltip" />
-			</h:panelGrid>
-
-			<p:commandButton id="submitButton" value="Submit" update="grid" />
-		</h:form>
+					</p:panelGrid>
+				</p:tab>
+				<p:tab id="tutorialRegistration">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="Tutorial Price:" />
+						<h:inputText
+							value="#{tutorialRegistrationBean.tutorial.tutorialPrice}"></h:inputText>
+						<p:outputLabel value="Tutorial Start Date:" />
+						<h:inputText
+							value="#{tutorialRegistrationBean.tutorial.tutorialStartDate}"></h:inputText>
+						<p:outputLabel value="Tutorial End Date:" />
+						<h:inputText
+							value="#{tutorialRegistrationBean.tutorial.tutorialEndDate}"></h:inputText>
+					</p:panelGrid>
+					<h:commandButton value="Register"
+						action="#{tutorialRegistrationBean.register}"></h:commandButton>
+				</p:tab>
+			</p:wizard>
+			<p:dataTable value="#{tutorialRegistrationBean.tutorials}"
+				var="tutorial">
+				<f:facet name="header">
+					<p:outputLabel value="Tutorials List" />
+				</f:facet>
+				<p:column>
+					<h:outputText value="#{tutorial.tutorialName}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{tutorial.tutorialInstructor}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{tutorial.tutorialStartDate}" />
+				</p:column>
+				<p:column>
+					<h:outputText value="#{tutorial.tutorialEndDate}" />
+				</p:column>
+			</p:dataTable>
+		</div>
 	</ui:define>
+
 </ui:composition>

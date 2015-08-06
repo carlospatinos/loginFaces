@@ -8,12 +8,20 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+<style>
+body {
+	background-image: url("resources/images/logo.jpg");
+	background-repeat: no-repeat;
+	background-position: left top;
+}
+</style>
 </h:head>
 <h:body>
 	<h:form>
 		<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
-		<p:dialog header="Login" widgetVar="dlg" resizable="false" visible="true" closable="false">
+		<p:dialog header="Login" widgetVar="dlg" resizable="false"
+			visible="true" closable="false">
 			<h:panelGrid columns="2" cellpadding="5">
 				<h:outputLabel for="username" value="#{msg['login.username']}" />
 				<p:inputText id="username" value="#{userLoginView.username}"

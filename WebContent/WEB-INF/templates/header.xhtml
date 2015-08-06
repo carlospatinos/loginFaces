@@ -4,10 +4,13 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core">
-	<center>
-		<h:outputText value="#{msg['header.title']}" />
-	</center>
-
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+		<b:navBar brand="Brand" brandHref="#" inverse="true">
+			<b:navbarLinks>
+				<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
+				<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
+				<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
+			</b:navbarLinks>
+		</b:navBar>
 </ui:composition>
-
