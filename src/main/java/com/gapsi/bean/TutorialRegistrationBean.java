@@ -12,7 +12,8 @@ import org.primefaces.event.FlowEvent;
 @ManagedBean
 @SessionScoped
 public class TutorialRegistrationBean implements Serializable {
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = -5692600756904440660L;
 	private List<Tutorial> tutorials = new ArrayList<Tutorial>();
 	private Tutorial tutorial = new Tutorial();
 

@@ -4,33 +4,33 @@
 <h:head>
 	<title>Wizard</title>
 	<style type="text/css">
-		.ui-steps .ui-steps-item {
-			width: 12%;
-		}
-		
-		.ui-state-highlight {
-			text-shadow: none !important;
-		}
-		
-		.ui-steps.custom {
-			margin-bottom: 30px;
-		}
-		
-		.ui-steps.custom .ui-steps-item .ui-menuitem-link {
-			height: 10px;
-			padding: 0 1em;
-		}
-		
-		.ui-steps.custom .ui-steps-item .ui-steps-number {
-			background-color: #0081c2;
-			color: #FFFFFF;
-			display: inline-block;
-			width: 20px;
-			border-radius: 10px;
-			margin-top: -10px;
-			margin-bottom: 10px;
-		}
-	</style>
+.ui-steps .ui-steps-item {
+	width: 12%;
+}
+
+.ui-state-highlight {
+	text-shadow: none !important;
+}
+
+.ui-steps.custom {
+	margin-bottom: 30px;
+}
+
+.ui-steps.custom .ui-steps-item .ui-menuitem-link {
+	height: 10px;
+	padding: 0 1em;
+}
+
+.ui-steps.custom .ui-steps-item .ui-steps-number {
+	background-color: #0081c2;
+	color: #FFFFFF;
+	display: inline-block;
+	width: 20px;
+	border-radius: 10px;
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+</style>
 	<script name="jquery/jquery.js" library="primefaces"></script>
 	<script>
 		function next() {
@@ -48,25 +48,11 @@
 
 <h:form>
 
-
-	<br />
-	<br />
-	<h3>#{msg['flow.step0']}</h3>
-	<p:steps activeIndex="0" styleClass="custom" readonly="false">
-		<p:menuitem value="#{msg['flow.step1']}" url="#" onclick="next();" />
-		<p:menuitem value="#{msg['flow.step2']}" url="#" />
-		<p:menuitem value="#{msg['flow.step3']}" url="#" />
-		<p:menuitem value="#{msg['flow.step4']}" url="#" />
-		<p:menuitem value="#{msg['flow.step5']}" url="#" />
-		<p:menuitem value="#{msg['flow.step6']}" url="#" />
-		<p:menuitem value="#{msg['flow.step7']}" url="#" />
-		<p:menuitem value="#{msg['flow.step8']}" url="#" />
-	</p:steps>
 	<br />
 	<br />
 	<div style="width: 500px">
-		<input value="Next" type="button" onclick="next();" /> <input value="Prev" type="button" onclick="back();" />
-		<p:wizard widgetVar="wizard" flowListener="#{tutorialRegistrationBean.flowListener}" showNavBar="false">
+		<input value="Prev" type="button" onclick="back();" /> <input value="Next" type="button" onclick="next();" />
+		<p:wizard widgetVar="wizard" flowListener="#{tutorialRegistrationBean.flowListener}" showNavBar="true">
 			<p:tab id="tutorialBasicInformation">
 				<p:panelGrid columns="2">
 					<p:outputLabel value="Tutorial Name:" />
@@ -89,6 +75,7 @@
 				<h:commandButton value="Register" action="#{tutorialRegistrationBean.register}"></h:commandButton>
 			</p:tab>
 		</p:wizard>
+		
 		<p:dataTable value="#{tutorialRegistrationBean.tutorials}" var="tutorial">
 			<f:facet name="header">
 				<p:outputLabel value="Tutorials List" />
@@ -105,49 +92,6 @@
 			<p:column>
 				<br />
 				<br />
-				<div style="width: 500px">
-					<input value="Next" type="button" onclick="next();" /> <input value="Prev" type="button" onclick="back();" />
-					<p:wizard widgetVar="wizard" flowListener="#{tutorialRegistrationBean.flowListener}" showNavBar="false">
-						<p:tab id="tutorialBasicInformation">
-							<p:panelGrid columns="2">
-								<p:outputLabel value="Tutorial Name:" />
-								<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialName}"></h:inputText>
-								<p:outputLabel value="Tutorial Instructor:" />
-								<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialInstructor}"></h:inputText>
-								<p:outputLabel value="Tutorial Period:" />
-								<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialPeriod}"></h:inputText>
-							</p:panelGrid>
-						</p:tab>
-						<p:tab id="tutorialRegistration">
-							<p:panelGrid columns="2">
-								<p:outputLabel value="Tutorial Price:" />
-								<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialPrice}"></h:inputText>
-								<p:outputLabel value="Tutorial Start Date:" />
-								<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialStartDate}"></h:inputText>
-								<p:outputLabel value="Tutorial End Date:" />
-								<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialEndDate}"></h:inputText>
-							</p:panelGrid>
-							<h:commandButton value="Register" action="#{tutorialRegistrationBean.register}"></h:commandButton>
-						</p:tab>
-					</p:wizard>
-					<p:dataTable value="#{tutorialRegistrationBean.tutorials}" var="tutorial">
-						<f:facet name="header">
-							<p:outputLabel value="Tutorials List" />
-						</f:facet>
-						<p:column>
-							<h:outputText value="#{tutorial.tutorialName}" />
-						</p:column>
-						<p:column>
-							<h:outputText value="#{tutorial.tutorialInstructor}" />
-						</p:column>
-						<p:column>
-							<h:outputText value="#{tutorial.tutorialStartDate}" />
-						</p:column>
-						<p:column>
-							<h:outputText value="#{tutorial.tutorialEndDate}" />
-						</p:column>
-					</p:dataTable>
-				</div>
 				<h:outputText value="#{tutorial.tutorialEndDate}" />
 			</p:column>
 		</p:dataTable>

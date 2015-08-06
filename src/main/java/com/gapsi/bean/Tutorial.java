@@ -3,8 +3,8 @@ package com.gapsi.bean;
 import java.io.Serializable;
 
 public class Tutorial implements Serializable {
-	 
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 8325446322995393724L;
 	private String tutorialName;
     private String tutorialInstructor;
     private String tutorialPeriod;

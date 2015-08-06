@@ -1,11 +1,7 @@
 
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui"
-	template="/WEB-INF/templates/basicTemplate.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" template="/WEB-INF/templates/basicTemplate.xhtml">
 
 	<ui:define name="extraHead">
 		<script name="jquery/jquery.js" library="primefaces"></script>
@@ -13,11 +9,20 @@
 			function next() {
 				console.log('next');
 				PF('wizard').next();
+				PF('stepsInFlow').setActiveIndex(2);
+
 			}
 
 			function back() {
 				console.log('back');
 				PF('wizard').back();
+				PF('stepsInFlow').setActiveIndex(3);
+			}
+
+			function goToStep(step) {
+				console.log('Moving to step: ' + step);
+				wizard = PF('wizard');
+				wizard.loadStep(wizard.cfg.steps[step], true);
 			}
 		</script>
 	</ui:define>
@@ -54,84 +59,106 @@
 }
 </style>
 		<h3>#{msg['flow.step0']}</h3>
-		<p:steps activeIndex="0" styleClass="custom" readonly="false">
-			<p:menuitem value="#{msg['flow.step1']}" url="#" />
-			<p:menuitem value="#{msg['flow.step2']}" url="#" />
-			<p:menuitem value="#{msg['flow.step3']}" url="#" />
-			<p:menuitem value="#{msg['flow.step4']}" url="#" />
-			<p:menuitem value="#{msg['flow.step5']}" url="#" />
-			<p:menuitem value="#{msg['flow.step6']}" url="#" />
-			<p:menuitem value="#{msg['flow.step7']}" url="#" />
-			<p:menuitem value="#{msg['flow.step8']}" url="#" />
-			<p:menuitem value="#{msg['flow.step9']}" url="#" />
+		<p:steps activeIndex="0" styleClass="custom" readonly="false" widgetVar="stepsInFlow">
+			<p:menuitem value="#{msg['flow.step1']}" url="#" onclick="goToStep(0);" />
+			<p:menuitem value="#{msg['flow.step2']}" url="#" onclick="goToStep(1);" />
+			<p:menuitem value="#{msg['flow.step3']}" url="#" onclick="goToStep(2);" />
+			<p:menuitem value="#{msg['flow.step4']}" url="#" onclick="goToStep(3);" />
+			<p:menuitem value="#{msg['flow.step5']}" url="#" onclick="goToStep(4);" />
+			<p:menuitem value="#{msg['flow.step6']}" url="#" onclick="goToStep(5);" />
+			<p:menuitem value="#{msg['flow.step7']}" url="#" onclick="goToStep(6);" />
+			<p:menuitem value="#{msg['flow.step8']}" url="#" onclick="goToStep(7);" />
+			<p:menuitem value="#{msg['flow.step9']}" url="#" onclick="goToStep(8);" />
 		</p:steps>
 		<br />
 		<br />
-		<br />
-		<br />
-		<div style="width: 500px">
-			<p:growl id="messages" showDetail="true" />
-			<input value="Next" type="button" onclick="next();" /> 
-			<input value="Prev" type="button" onclick="back();" />
-			<p:wizard widgetVar="wizard"
-				flowListener="#{tutorialRegistrationBean.flowListener}"
-				showNavBar="false">
-				<p:tab id="tutorialBasicInformation">
-					<p:panelGrid columns="2">
-						<p:outputLabel value="Tutorial Name:" />
-						<h:inputText
-							value="#{tutorialRegistrationBean.tutorial.tutorialName}"></h:inputText>
-						<p:outputLabel value="Tutorial Instructor:" />
-						<h:inputText
-							value="#{tutorialRegistrationBean.tutorial.tutorialInstructor}"></h:inputText>
-						<p:outputLabel value="Tutorial Period:" />
-						<h:inputText
-							value="#{tutorialRegistrationBean.tutorial.tutorialPeriod}"></h:inputText>
-						<p:outputLabel value="file:" />
-						<p:fileUpload
-							fileUploadListener="#{fileUploadView.handleFileUpload}"
-							mode="advanced" dragDropSupport="false" update="messages"
-							sizeLimit="100000" fileLimit="3"
-							allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+		<center>
+			<h:inputText value="#{editor.value}">
+				<p:ajax update="out" />
+			</h:inputText>
+			<h:outputText id="out" value="#{editor.value}" />
+			<div style="width: 500px">
+				<p:growl id="messages" showDetail="true" />
+				<input value="Prev" type="button" onclick="back();" /> <input value="Next" type="button" onclick="next();" />
+				<p:wizard widgetVar="wizard" flowListener="#{tutorialRegistrationBean.flowListener}" showNavBar="true">
+					<p:tab id="uploadFile">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="Curso" />
+							<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialName}"></h:inputText>
+							<p:outputLabel value="#{msg['uploadFile.fileName']}" />
+							<p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+								update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="transformToXml">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="Tutorial Price:" />
+							<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialPrice}"></h:inputText>
+							<p:outputLabel value="Tutorial Start Date:" />
+							<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialStartDate}"></h:inputText>
+							<p:outputLabel value="Tutorial End Date:" />
+							<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialEndDate}"></h:inputText>
+						</p:panelGrid>
 
-
-					</p:panelGrid>
-				</p:tab>
-				<p:tab id="tutorialRegistration">
-					<p:panelGrid columns="2">
-						<p:outputLabel value="Tutorial Price:" />
-						<h:inputText
-							value="#{tutorialRegistrationBean.tutorial.tutorialPrice}"></h:inputText>
-						<p:outputLabel value="Tutorial Start Date:" />
-						<h:inputText
-							value="#{tutorialRegistrationBean.tutorial.tutorialStartDate}"></h:inputText>
-						<p:outputLabel value="Tutorial End Date:" />
-						<h:inputText
-							value="#{tutorialRegistrationBean.tutorial.tutorialEndDate}"></h:inputText>
-					</p:panelGrid>
-					<h:commandButton value="Register"
-						action="#{tutorialRegistrationBean.register}"></h:commandButton>
-				</p:tab>
-			</p:wizard>
-			<p:dataTable value="#{tutorialRegistrationBean.tutorials}"
-				var="tutorial">
-				<f:facet name="header">
-					<p:outputLabel value="Tutorials List" />
-				</f:facet>
-				<p:column>
-					<h:outputText value="#{tutorial.tutorialName}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{tutorial.tutorialInstructor}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{tutorial.tutorialStartDate}" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{tutorial.tutorialEndDate}" />
-				</p:column>
-			</p:dataTable>
-		</div>
+					</p:tab>
+					<p:tab id="transformToBase64">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="transformToBase64" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="transformToSoap">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="transformToSoap" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="timeStamp">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="timeStamp" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="signature">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="signature" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="cypher">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="cypher" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="sending">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="sending" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab id="response">
+						<p:panelGrid columns="2">
+							<p:outputLabel value="response" />
+							<h:commandButton value="Register" action="#{tutorialRegistrationBean.register}" oncomplete="resetWizard()"></h:commandButton>
+						</p:panelGrid>
+					</p:tab>
+				</p:wizard>
+				<br />
+				<br />
+				<p:dataTable value="#{tutorialRegistrationBean.tutorials}" var="tutorial">
+					<f:facet name="header">
+						<p:outputLabel value="#{msg['logPanel.title']}" />
+					</f:facet>
+					<p:column>
+						<h:outputText value="#{tutorial.tutorialName}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{tutorial.tutorialInstructor}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{tutorial.tutorialStartDate}" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{tutorial.tutorialEndDate}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</center>
 	</ui:define>
 
 </ui:composition>
