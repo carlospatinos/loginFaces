@@ -60,7 +60,7 @@
 </style>
 		<h3>#{msg['flow.step0']}</h3>
 		<p:steps activeIndex="0" styleClass="custom" readonly="false" widgetVar="stepsInFlow">
-			<p:menuitem value="#{msg['flow.step1']}" url="#" onclick="goToStep(0);" />
+			<p:menuitem value="#{msg['flow.step1']}" url="#" onclick="goToStep(0);" icon="ui-icon-disk"/>
 			<p:menuitem value="#{msg['flow.step2']}" url="#" onclick="goToStep(1);" />
 			<p:menuitem value="#{msg['flow.step3']}" url="#" onclick="goToStep(2);" />
 			<p:menuitem value="#{msg['flow.step4']}" url="#" onclick="goToStep(3);" />
@@ -73,22 +73,27 @@
 		<br />
 		<br />
 		<center>
-			<h:inputText value="#{editor.value}">
-				<p:ajax update="out" />
-			</h:inputText>
-			<h:outputText id="out" value="#{editor.value}" />
+
 			<div style="width: 500px">
-				<p:growl id="messages" showDetail="true" />
+
 				<input value="Prev" type="button" onclick="back();" /> <input value="Next" type="button" onclick="next();" />
 				<p:wizard widgetVar="wizard" flowListener="#{tutorialRegistrationBean.flowListener}" showNavBar="true">
 					<p:tab id="uploadFile">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="Curso" />
-							<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialName}"></h:inputText>
-							<p:outputLabel value="#{msg['uploadFile.fileName']}" />
-							<p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-								update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-						</p:panelGrid>
+						<h:form enctype="multipart/form-data">
+							<p:growl id="messages" showDetail="true" />
+							<p:panelGrid columns="2">
+								<p:outputLabel value="Curso" />
+								<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialName}"></h:inputText>
+								<p:outputLabel value="#{msg['uploadFile.fileName']}" />
+								<p:fileUpload mode="advanced" dragDropSupport="false" fileUploadListener="#{fileUploadView.handleFileUpload}"
+									update="messages" sizeLimit="10000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+									
+                					<p:separator/>
+								<!--  value="# { fileUploadView.file}" -->
+
+								<p:commandButton value="Submit" ajax="false" action="#{fileUploadView.dummyAction}"/>
+							</p:panelGrid>
+						</h:form>
 					</p:tab>
 					<p:tab id="transformToXml">
 						<p:panelGrid columns="2">
@@ -138,8 +143,7 @@
 						</p:panelGrid>
 					</p:tab>
 				</p:wizard>
-				<br />
-				<br />
+				<br /> <br />
 				<p:dataTable value="#{tutorialRegistrationBean.tutorials}" var="tutorial">
 					<f:facet name="header">
 						<p:outputLabel value="#{msg['logPanel.title']}" />

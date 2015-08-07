@@ -12,12 +12,8 @@
 		<param-name>com.sun.faces.enableMissingResourceLibraryDetection</param-name>
 		<param-value>true</param-value>
 	</context-param>
-	<!-- 
-	<context-param>
-		<param-name>primefaces.THEME</param-name>
-		<param-value>home</param-value>
-	</context-param>
-	 -->
+	<!-- <context-param> <param-name>primefaces.THEME</param-name> <param-value>home</param-value> 
+		</context-param> -->
 	<context-param>
 		<param-name>javax.faces.CONFIG_FILES</param-name>
 		<param-value>/WEB-INF/faces-config.xml</param-value>
@@ -27,21 +23,39 @@
 		<param-value>.xhtml</param-value>
 	</context-param>
 	<welcome-file-list>
+		<welcome-file>empty.xhtml</welcome-file>
 		<welcome-file>index.xhtml</welcome-file>
 		<welcome-file>login.xhtml</welcome-file>
 	</welcome-file-list>
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<!-- 
+	<listener>
+		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+	</listener>
+	 -->
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	<!-- <servlet-mapping> <servlet-name>Faces Servlet</servlet-name> <url-pattern>/faces/*</url-pattern> 
-		</servlet-mapping> <servlet-mapping> <servlet-name>Faces Servlet</servlet-name> 
-		<url-pattern>*.jsf</url-pattern> </servlet-mapping> <servlet-mapping> <servlet-name>Faces 
-		Servlet</servlet-name> <url-pattern>*.faces</url-pattern> </servlet-mapping> -->
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
@@ -53,10 +67,38 @@
 		<param-value>client</param-value>
 	</context-param>
 	<context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>auto|native|commons</param-value>
+	</context-param>
+	<context-param>
 		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
 		<param-value>resources.application</param-value>
 	</context-param>
-	<listener>
-		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
-	</listener>
+
+
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+		<init-param>
+			<param-name>thresholdSize</param-name>
+			<param-value>104857600</param-value>
+		</init-param>
+		<init-param>
+			<param-name>uploadDirectory</param-name>
+			<param-value>/home/ecapati/Desktop/</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/not_exist.jsf</location>
+	</error-page>
+
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/exception.jsf</location>
+	</error-page>
 </web-app>

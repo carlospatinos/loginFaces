@@ -15,10 +15,9 @@
 
 	<h:head>
 		<ui:debug />
-		<!--
-		<h:body onload="statusDialog.hide();">  
-		<p:ajaxStatus onstart="statusDialog.show();" onsuccess="statusDialog.hide();" />
-		 -->
+
+		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
+		 
 		<ui:insert name="extraHead" />
 
 	</h:head>
@@ -26,7 +25,7 @@
 		visible="false" position="center" maximizable="false" minimizable="false">
 		<p:graphicImage value="#{resource['images/ajax-loader.gif']}" />
 	</p:dialog>
-	<h:body>
+	<h:body onload="PF('statusDialog').hide();">
 
 		<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFF0FF;">
 			<!-- 
