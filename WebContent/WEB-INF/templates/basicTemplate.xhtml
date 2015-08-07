@@ -17,7 +17,7 @@
 		<ui:debug />
 
 		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
-		 
+
 		<ui:insert name="extraHead" />
 
 	</h:head>
@@ -35,20 +35,27 @@
 			-->
 
 			<p:layoutUnit styleClass="layoutUnitCenter" position="center">
-				<b:navBar brand="#{msg['app.name']}" brandHref="#" inverse="true">
-					<b:navbarLinks>
-						<b:navLink value="#{msg['navBar.profile']}" href="#"></b:navLink>
-						<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
-					</b:navbarLinks>
-				</b:navBar>
-				<p:tooltip />
+				<p:panel id="header">
+					<b:navBar brand="#{msg['app.name']}" brandHref="#" inverse="true">
+						<b:navbarLinks>
+							<b:navLink value="#{msg['navBar.profile']}" href="#"></b:navLink>
+							<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
+						</b:navbarLinks>
+					</b:navBar>
+					<p:tooltip />
+				</p:panel>
+
 				<h:form id="mainForm">
-					<ui:insert name="content" />
+					<p:panel id="mainPanel">
+						<ui:insert name="content" />
+					</p:panel>
 				</h:form>
+
 			</p:layoutUnit>
 
 			<p:layoutUnit position="east" size="0" style="width:0px; display:none;" id="east">
 			</p:layoutUnit>
+
 
 			<p:layoutUnit position="south" resizable="false" id="south">
 				<ui:include src="footer.xhtml" />
