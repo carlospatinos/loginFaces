@@ -1,4 +1,4 @@
-package com.gapsi.bean;
+package com.jsfexamples.bean;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -57,6 +57,8 @@ public class FileUploadView implements Serializable {
 		}
 
 	}
+	
+	
 
 	public String save() throws IOException {
 		if (file != null) {

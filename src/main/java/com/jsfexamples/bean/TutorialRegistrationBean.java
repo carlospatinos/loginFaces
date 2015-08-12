@@ -1,4 +1,4 @@
-package com.gapsi.bean;
+package com.jsfexamples.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -42,6 +42,13 @@
 			console.log('back');
 			PF('wizard').back();
 		}
+		function resetWizard() {
+			console.log('reset');
+			wizard = PF('wizard');
+			console.log(wizard.cfg.steps);
+			wizard.loadStep(wizard.cfg.steps[0], true);
+			//PF('wiz').loadStep('tabId',false);
+		}
 	</script>
 </h:head>
 
@@ -72,7 +79,7 @@
 					<p:outputLabel value="Tutorial End Date:" />
 					<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialEndDate}"></h:inputText>
 				</p:panelGrid>
-				<h:commandButton value="Register" action="#{tutorialRegistrationBean.register}"></h:commandButton>
+				<h:commandButton value="Register" action="#{tutorialRegistrationBean.register}" ></h:commandButton>
 			</p:tab>
 		</p:wizard>
 		
