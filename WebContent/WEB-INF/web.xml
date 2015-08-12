@@ -27,11 +27,11 @@
 		<welcome-file>index.xhtml</welcome-file>
 		<welcome-file>login.xhtml</welcome-file>
 	</welcome-file-list>
-	
+	<!-- 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!-- 
+	
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
@@ -83,10 +83,12 @@
 			<param-name>thresholdSize</param-name>
 			<param-value>104857600</param-value>
 		</init-param>
+		<!-- 
 		<init-param>
 			<param-name>uploadDirectory</param-name>
-			<param-value>/home/ecapati/Desktop/</param-value>
+			<param-value>/home/</param-value>
 		</init-param>
+		 -->
 	</filter>
 	<filter-mapping>
 		<filter-name>PrimeFaces FileUpload Filter</filter-name>

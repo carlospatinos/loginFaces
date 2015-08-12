@@ -10,7 +10,6 @@
 				console.log('next');
 				PF('wizard').next();
 				PF('stepsInFlow').setActiveIndex(2);
-
 			}
 
 			function back() {
@@ -32,7 +31,7 @@
 
 		<style type="text/css">
 .ui-steps .ui-steps-item {
-	width: 11.1%;
+	width: 25%;
 }
 
 .ui-state-highlight {
@@ -64,11 +63,6 @@
 			<p:menuitem value="#{msg['flow.step2']}" url="#" onclick="goToStep(1);" />
 			<p:menuitem value="#{msg['flow.step3']}" url="#" onclick="goToStep(2);" />
 			<p:menuitem value="#{msg['flow.step4']}" url="#" onclick="goToStep(3);" />
-			<p:menuitem value="#{msg['flow.step5']}" url="#" onclick="goToStep(4);" />
-			<p:menuitem value="#{msg['flow.step6']}" url="#" onclick="goToStep(5);" />
-			<p:menuitem value="#{msg['flow.step7']}" url="#" onclick="goToStep(6);" />
-			<p:menuitem value="#{msg['flow.step8']}" url="#" onclick="goToStep(7);" />
-			<p:menuitem value="#{msg['flow.step9']}" url="#" onclick="goToStep(8);" />
 		</p:steps>
 		<br />
 		<br />
@@ -82,63 +76,29 @@
 						<h:form enctype="multipart/form-data">
 							<p:growl id="messages" showDetail="true" />
 							<p:panelGrid columns="2">
-								<p:outputLabel value="Curso" />
-								<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialName}"></h:inputText>
 								<p:outputLabel value="#{msg['uploadFile.fileName']}" />
-								<p:fileUpload mode="advanced" dragDropSupport="false" fileUploadListener="#{fileUploadView.handleFileUpload}"
+								<p:fileUpload mode="advanced" dragDropSupport="false" fileUploadListener="#{fileUploadView.handleFileUpload}" value="#{fileUploadView.file}"
 									update="messages" sizeLimit="10000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 									
-                					<p:separator/>
-								<!--  value="# { fileUploadView.file}" -->
-
 								<p:commandButton value="Submit" ajax="false" action="#{fileUploadView.dummyAction}"/>
 							</p:panelGrid>
 						</h:form>
 					</p:tab>
 					<p:tab id="transformToXml">
 						<p:panelGrid columns="2">
-							<p:outputLabel value="Tutorial Price:" />
+							<p:outputLabel value="Dato:" />
 							<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialPrice}"></h:inputText>
-							<p:outputLabel value="Tutorial Start Date:" />
-							<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialStartDate}"></h:inputText>
-							<p:outputLabel value="Tutorial End Date:" />
-							<h:inputText value="#{tutorialRegistrationBean.tutorial.tutorialEndDate}"></h:inputText>
 						</p:panelGrid>
 
 					</p:tab>
-					<p:tab id="transformToBase64">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="transformToBase64" />
-						</p:panelGrid>
-					</p:tab>
-					<p:tab id="transformToSoap">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="transformToSoap" />
-						</p:panelGrid>
-					</p:tab>
-					<p:tab id="timeStamp">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="timeStamp" />
-						</p:panelGrid>
-					</p:tab>
-					<p:tab id="signature">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="signature" />
-						</p:panelGrid>
-					</p:tab>
-					<p:tab id="cypher">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="cypher" />
-						</p:panelGrid>
-					</p:tab>
 					<p:tab id="sending">
 						<p:panelGrid columns="2">
-							<p:outputLabel value="sending" />
+							<p:outputLabel value="#{msg['flow.step7']}" />
 						</p:panelGrid>
 					</p:tab>
 					<p:tab id="response">
 						<p:panelGrid columns="2">
-							<p:outputLabel value="response" />
+							<p:outputLabel value="#{msg['flow.step8']}" />
 							<h:commandButton value="Register" action="#{tutorialRegistrationBean.register}" oncomplete="resetWizard()"></h:commandButton>
 						</p:panelGrid>
 					</p:tab>

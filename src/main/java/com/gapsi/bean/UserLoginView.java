@@ -2,6 +2,9 @@ package com.gapsi.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -14,6 +17,9 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 public class UserLoginView implements Serializable {
 	private static final long serialVersionUID = 7480483082729505751L;
+	
+	private final Logger log =
+	          Logger.getLogger(this.getClass().getName());
 
 	private String username;
 
@@ -37,33 +43,39 @@ public class UserLoginView implements Serializable {
 
 	public void login(ActionEvent event) {
 		String urlToGo = "";
-		System.out.println("login");
 		RequestContext context = RequestContext.getCurrentInstance();
 		FacesMessage message = null;
 		boolean loggedIn = false;
 
-		if (username != null && username.equals("admin") && password != null && password.equals("admin")) {
-			System.out.println("ok");
-			
-			loggedIn = true;
-			message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
-			urlToGo = "main.xhtml?faces-redirect=true";
-			FacesContext fc = FacesContext.getCurrentInstance();
-			ExternalContext ec = fc.getExternalContext();
-			try {
-		        ec.redirect(urlToGo);
-		} catch (IOException ex) {
-		        System.out.println(ex);
+		FacesContext fc = FacesContext.getCurrentInstance();
+		ExternalContext ec = fc.getExternalContext();
+		ResourceBundle bundle = null;
+		try {
+		    bundle = ResourceBundle.getBundle("messages", fc.getViewRoot().getLocale());
+		} catch (Exception ex) {
+			log.log(Level.SEVERE, "Exception loading internationalization file", ex);
 		}
+		
+		if (username != null && username.equals("admin") && password != null && password.equals("admin")) {
+			log.log(Level.INFO, "Sucessful login attempt for user [{0}]", username);
+			loggedIn = true;
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("login.welcome"), username);
+			urlToGo = "main.xhtml?faces-redirect=true";			
 		} else {
-			System.out.println("wrong");
+			log.log(Level.WARNING, "Failed login attempt for user [{0}]", username);
 			loggedIn = false;
-			message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");
+			message = new FacesMessage(FacesMessage.SEVERITY_WARN, bundle.getString("login.error"), bundle.getString("login.error.msg"));
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, message);
 		context.addCallbackParam("loggedIn", loggedIn);
 		
-		//return "login?faces-redirect=true";
+		if (loggedIn) {
+			try {
+				ec.redirect(urlToGo);
+			} catch (IOException ex) {
+				log.log(Level.SEVERE, "Exception happend when redirecting logged used", ex);
+			}
+		}
 	}
 }

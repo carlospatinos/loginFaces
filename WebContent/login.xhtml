@@ -9,11 +9,15 @@
 
 <h:head>
 <style>
+/*
+<!--
 body {
 	background-image: url("resources/images/logo.jpg");
 	background-repeat: no-repeat;
 	background-position: left top;
 }
+-->
+*/
 </style>
 </h:head>
 <h:body>
@@ -42,13 +46,13 @@ body {
 
 	<script type="text/javascript">
 		function handleLoginRequest(xhr, status, args) {
+			console.log(args);
 			if (args.validationFailed || !args.loggedIn) {
 				PF('dlg').jq.effect("shake", {
 					times : 5
 				}, 100);
 			} else {
 				PF('dlg').hide();
-				$('#loginLink').fadeOut();
 			}
 		}
 	</script>
