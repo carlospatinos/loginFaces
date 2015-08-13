@@ -12,14 +12,12 @@
 	<f:metadata>
 		<ui:insert name="metadata" />
 	</f:metadata>
-
 	<h:head>
 		<ui:debug />
 
 		<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();" />
 
 		<ui:insert name="extraHead" />
-
 	</h:head>
 	<p:dialog modal="true" widgetVar="statusDialog" showHeader="false" draggable="false" closable="false" resizable="false"
 		visible="false" position="center" maximizable="false" minimizable="false">
@@ -27,44 +25,34 @@
 	</p:dialog>
 	<h:body onload="PF('statusDialog').hide();">
 
-		<p:layout fullPage="true" resizeTitle="resize" style="background-color:#FFF0FF;">
-			<!-- 
-			<p:layoutUnit position="north" size="68" id="north">
-				<ui:include src="header.xhtml" />
-			</p:layoutUnit>
-			-->
+		<div id="page">
 
-			<p:layoutUnit styleClass="layoutUnitCenter" position="center">
-				<p:panel id="header">
-					<b:navBar brand="#{msg['app.name']}" brandHref="#" inverse="true">
-						<b:navbarLinks>
-							<b:navLink value="#{msg['navBar.profile']}" href="#"></b:navLink>
-							<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
-						</b:navbarLinks>
-					</b:navBar>
-					<p:tooltip />
-				</p:panel>
+			<div id="header">
+				<ui:insert name="header">
+					<ui:include src="header.xhtml" />
+				</ui:insert>
+			</div>
 
-				<h:form id="mainForm">
-					<p:panel id="mainPanel">
-						<ui:insert name="content" />
-					</p:panel>
+			<div id="content">
+				<h:form id="mainForm" enctype="multipart/form-data">
+					<ui:insert name="content">
+						<ui:include src="commonContent.xhtml" />
+					</ui:insert>
 				</h:form>
+			</div>
 
-			</p:layoutUnit>
+			<div id="footer">
+				<ui:insert name="footer">
+					<ui:include src="footer.xhtml" />
+				</ui:insert>
+			</div>
 
-			<p:layoutUnit position="east" size="0" style="width:0px; display:none;" id="east">
-			</p:layoutUnit>
-
-
-			<p:layoutUnit position="south" resizable="false" id="south">
-				<ui:include src="footer.xhtml" />
-			</p:layoutUnit>
-		</p:layout>
-
-
+		</div>
 
 	</h:body>
-
 </f:view>
 </html>
+
+
+
+

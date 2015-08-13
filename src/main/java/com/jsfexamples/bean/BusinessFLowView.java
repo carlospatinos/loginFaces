@@ -20,6 +20,9 @@ import javax.faces.context.FacesContext;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+//import org.apache.commons.lang.builder.ToStringBuilder;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.model.UploadedFile;
@@ -28,7 +31,9 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class BusinessFLowView implements Serializable {
 	private static final long serialVersionUID = -3980071992108155000L;
-	private transient final Logger log = Logger.getLogger(this.getClass().getName());
+	//private final Logger log = Logger.getLogger(this.getClass().getName());
+	
+	private static final Logger log = Logger.getLogger("BusinessFLowView");
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
@@ -94,10 +99,10 @@ public class BusinessFLowView implements Serializable {
 		 */
 	}
 
-	public void register() {
-		log.log(Level.INFO, "Registering");
-		FacesMessage msg = new FacesMessage("Successful", "Welcome :");
-	    FacesContext.getCurrentInstance().addMessage(null, msg);
+	public String register() {
+		//logs.clear();
+		log.log(Level.INFO, ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE));
+	    return "main.xhtml?faces-redirect=true";
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {

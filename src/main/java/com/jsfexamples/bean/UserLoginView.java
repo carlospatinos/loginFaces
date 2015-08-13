@@ -60,7 +60,7 @@ public class UserLoginView implements Serializable {
 			log.log(Level.INFO, "Sucessful login attempt for user [{0}]", username);
 			loggedIn = true;
 			message = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("login.welcome"), username);
-			urlToGo = "main.xhtml?faces-redirect=true";			
+			urlToGo = "main.xhtml?faces-redirect=true";
 		} else {
 			log.log(Level.WARNING, "Failed login attempt for user [{0}]", username);
 			loggedIn = false;
