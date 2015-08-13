@@ -1,15 +1,15 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui" id="hla">
-		<b:navBar brand="#{msg['app.name']}" brandHref="#" inverse="true" >
-			<b:navbarLinks>
-				<b:navLink value="#{msg['navBar.profile']}" href="#"></b:navLink>
-				<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
-			</b:navbarLinks>
-		</b:navBar>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+	<b:navBar brand="#{msg['app.name']}" brandHref="#" inverse="true" fixed="top">
+		<b:navbarLinks>
+			<b:navLink value="#{msg['navBar.profile']}" href="#"></b:navLink>
+			<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
+		</b:navbarLinks>
+		<b:navbarLinks pull="right">
+			<b:navLink value="Logout" href="#"></b:navLink>
+		</b:navbarLinks>
+	</b:navBar>
 </ui:composition>

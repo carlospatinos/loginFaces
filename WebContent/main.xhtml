@@ -1,45 +1,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui" template="/WEB-INF/templates/basicTemplate.xhtml">
-
-	<ui:define name="extraHead">
-		<style>
-.ui-layout-unit-content .ui-widget-content {
-	padding: 0px;
-	margin: 0px;
-}
-</style>
-		<script name="jquery/jquery.js" library="primefaces"></script>
-		<script>
-			function next() {
-				console.log('next');
-				PF('wizard').next();
-				PF('stepsInFlow').setActiveIndex(2);
-			}
-
-			function back() {
-				console.log('back');
-				PF('wizard').back();
-				PF('stepsInFlow').setActiveIndex(3);
-			}
-
-			function goToStep(step) {
-				console.log('Moving to step: ' + step);
-				wizard = PF('wizard');
-				wizard.loadStep(wizard.cfg.steps[step], true);
-			}
-			function resetWizard() {
-				console.log('reset');
-				wizard = PF('wizard');
-				console.log(wizard.cfg.steps);
-				wizard.loadStep(wizard.cfg.steps[0], true);
-				//PF('wiz').loadStep('tabId',false);
-			}
-		</script>
-	</ui:define>
-
-
 	<ui:define name="content">
+
 		<center>
 
 			<div style="width: 500px">
@@ -68,12 +31,12 @@
 							<p:messages />
 							<p:panelGrid columns="2">
 								<p:outputLabel value="#{msg['main.fileNameToDownload']}" />
-								<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
-									icon="ui-icon-arrowthick-1-s">
-									<p:fileDownload value="#{businessFLowView.downloadedFile}" />
-								</p:commandButton>
+								
+								<b:button outcome="testButton" value="Bookmark" icon="bookmark">
+									<f:param name="testId" value="11" />
+								</b:button>
 								<h:outputText value="#{msg['main.fileValid']}" />
-								<h:selectBooleanCheckbox value="#{businessFLowView.validFile}" label="Firstname" />
+								<h:selectBooleanCheckbox value="#{businessFLowView.validFile}" />
 							</p:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -82,7 +45,7 @@
 							<p:messages />
 							<p:panelGrid columns="2">
 								<p:outputLabel value="#{msg['flow.step2']}" />
-								<h:inputText value="#{businessFLowView.uploadedDate}" required="true" label="Firstn2ame">
+								<h:inputText value="#{businessFLowView.uploadedDate}" required="true" label="#{businessFLowView.uploadedDate}">
 									<p:ajax event="keyup" update="grid" />
 								</h:inputText>
 							</p:panelGrid>

@@ -25,39 +25,19 @@
 	</p:dialog>
 	<h:body onload="PF('statusDialog').hide();">
 
-<!-- 
-		<div id="page">
-
-			<div id="header">
-				<ui:insert name="header">
-					<ui:include src="header.xhtml" />
-				</ui:insert>
-			</div>
-
-			<div id="content">
-				<h:form id="mainForm" enctype="multipart/form-data">
-					<ui:insert name="content">
-						<ui:include src="commonContent.xhtml" />
-					</ui:insert>
-				</h:form>
-			</div>
-
-			<div id="footer">
-				<ui:insert name="footer">
-					<ui:include src="footer.xhtml" />
-				</ui:insert>
-			</div>
-
-		</div>
-		  -->
 		<p:layout fullPage="true" id="page" resizeTitle="resize">
-			 
-			<p:layoutUnit position="north" id="north" >
+
+			<p:layoutUnit position="north" id="north" size="45">
 				<ui:insert name="header">
 					<ui:include src="header.xhtml" />
 				</ui:insert>
 			</p:layoutUnit>
-			
+
+			<p:layoutUnit position="east" size="0" style="width:10px; display:none;" id="east">
+				<ui:insert name="menu">
+					<ui:include src="menu.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
 
 			<p:layoutUnit position="center" id="content">
 
@@ -70,8 +50,8 @@
 			</p:layoutUnit>
 
 
-			<p:layoutUnit position="south" resizable="false" id="south" size="50" >
-				<ui:insert name="footer" >
+			<p:layoutUnit position="south" resizable="false" id="south" size="50">
+				<ui:insert name="footer">
 					<ui:include src="footer.xhtml" />
 				</ui:insert>
 			</p:layoutUnit>

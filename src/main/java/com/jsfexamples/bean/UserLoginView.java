@@ -17,9 +17,8 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 public class UserLoginView implements Serializable {
 	private static final long serialVersionUID = 7480483082729505751L;
-	
-	private final Logger log =
-	          Logger.getLogger(this.getClass().getName());
+
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 
 	private String username;
 
@@ -56,8 +55,15 @@ public class UserLoginView implements Serializable {
 			log.log(Level.SEVERE, "Exception loading internationalization file", ex);
 		}
 		
-		if (username != null && username.equals("admin") && password != null && password.equals("admin")) {
-			log.log(Level.INFO, "Sucessful login attempt for user [{0}]", username);
+		final String ADMIN = "admin";
+		final String USER = "user";
+		if (username != null && username.equals(ADMIN) && password != null && password.equals(ADMIN)) {
+			log.log(Level.INFO, "Sucessful login attempt for user [{0}] with profile [{0}]", new Object[] {username, ADMIN});
+			loggedIn = true;
+			message = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("login.welcome"), username);
+			urlToGo = "main.xhtml?faces-redirect=true";
+		} else if (username != null && username.equals(USER) && password != null && password.equals(USER)) {
+			log.log(Level.INFO, "Sucessful login attempt for user [{0}] with profile [{0}]", new Object[] {username, USER});
 			loggedIn = true;
 			message = new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("login.welcome"), username);
 			urlToGo = "main.xhtml?faces-redirect=true";
