@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui" template="/WEB-INF/templates/basicTemplate.xhtml">
+
+	<ui:define name="extraHead">
+		<style>
+.ui-layout-unit-content .ui-widget-content {
+	padding: 0px;
+	margin: 0px;
+}
+</style>
+		<script name="jquery/jquery.js" library="primefaces"></script>
+		<script>
+			function next() {
+				console.log('next');
+				PF('wizard').next();
+				PF('stepsInFlow').setActiveIndex(2);
+			}
+
+			function back() {
+				console.log('back');
+				PF('wizard').back();
+				PF('stepsInFlow').setActiveIndex(3);
+			}
+
+			function goToStep(step) {
+				console.log('Moving to step: ' + step);
+				wizard = PF('wizard');
+				wizard.loadStep(wizard.cfg.steps[step], true);
+			}
+			function resetWizard() {
+				console.log('reset');
+				wizard = PF('wizard');
+				console.log(wizard.cfg.steps);
+				wizard.loadStep(wizard.cfg.steps[0], true);
+				//PF('wiz').loadStep('tabId',false);
+			}
+		</script>
+	</ui:define>
+
+
+	<ui:define name="content">
+
+		<p:growl id="msgs" showDetail="true" />
+
+		<h3 style="margin-top: 0">Basic</h3>
+
+
+		<h3>Change Event</h3>
+		<p:tabView>
+			<p:ajax event="tabChange" listener="#{businessFLowView.onTabChange}" update=":mainForm:msgs" />
+			<p:ajax event="tabClose" listener="#{businessFLowView.onTabChange}" update=":mainForm:msgs" />
+
+			<p:tab title="Godfather Part I">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:graphicImage name="demo/images/godfather/godfather1.jpg" />
+					<h:outputText value="The story begins as Don Vito Corleone..." />
+				</h:panelGrid>
+			</p:tab>
+			<p:tab title="Godfather Part II" closable="true">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+					<h:outputText value="Francis Ford Coppola's legendary..." />
+				</h:panelGrid>
+			</p:tab>
+			<p:tab title="Godfather Part III" closable="true">
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+					<h:outputText value="After a break of more than 15 years..." />
+				</h:panelGrid>
+			</p:tab>
+		</p:tabView>
+
+
+	</ui:define>
+
+</ui:composition>

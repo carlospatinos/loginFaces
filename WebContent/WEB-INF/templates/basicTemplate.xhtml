@@ -25,6 +25,7 @@
 	</p:dialog>
 	<h:body onload="PF('statusDialog').hide();">
 
+<!-- 
 		<div id="page">
 
 			<div id="header">
@@ -48,6 +49,33 @@
 			</div>
 
 		</div>
+		  -->
+		<p:layout fullPage="true" id="page" resizeTitle="resize">
+			 
+			<p:layoutUnit position="north" id="north" >
+				<ui:insert name="header">
+					<ui:include src="header.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
+			
+
+			<p:layoutUnit position="center" id="content">
+
+				<h:form id="mainForm" enctype="multipart/form-data">
+					<ui:insert name="content">
+						<ui:include src="commonContent.xhtml" />
+					</ui:insert>
+				</h:form>
+
+			</p:layoutUnit>
+
+
+			<p:layoutUnit position="south" resizable="false" id="south" size="50" >
+				<ui:insert name="footer" >
+					<ui:include src="footer.xhtml" />
+				</ui:insert>
+			</p:layoutUnit>
+		</p:layout>
 
 	</h:body>
 </f:view>

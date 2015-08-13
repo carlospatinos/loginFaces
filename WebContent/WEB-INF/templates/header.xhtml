@@ -5,11 +5,10 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:b="http://bootsfaces.net/ui">
-		<b:navBar brand="Brand" brandHref="#" inverse="true">
+	xmlns:b="http://bootsfaces.net/ui" id="hla">
+		<b:navBar brand="#{msg['app.name']}" brandHref="#" inverse="true" >
 			<b:navbarLinks>
-				<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
-				<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
+				<b:navLink value="#{msg['navBar.profile']}" href="#"></b:navLink>
 				<b:navLink value="#{msg['header.title']}" href="#"></b:navLink>
 			</b:navbarLinks>
 		</b:navBar>

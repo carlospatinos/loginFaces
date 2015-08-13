@@ -15,8 +15,9 @@ import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -25,10 +26,13 @@ import org.apache.commons.lang.builder.ToStringStyle;
 //import org.apache.commons.lang.builder.ToStringBuilder;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
+import org.primefaces.event.TabChangeEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class BusinessFLowView implements Serializable {
 	private static final long serialVersionUID = -3980071992108155000L;
 	//private final Logger log = Logger.getLogger(this.getClass().getName());
@@ -38,10 +42,26 @@ public class BusinessFLowView implements Serializable {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
 	private UploadedFile file;
+	private StreamedContent downloadedFile;
 	private String uploadedDate;
 	private boolean validFile;
-
 	private List<LogEntry> logs = new ArrayList<LogEntry>();
+	
+	public BusinessFLowView() {
+		String fileName = "/home/ecapati/Pictures/error.png";
+		InputStream stream = ((ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream(fileName);
+		log.log(Level.INFO, "File to download is [{0}] size [{1}].", new Object[]{fileName, "500k"});
+        downloadedFile = new DefaultStreamedContent(stream, "image/jpg", "downloaded_optimus.jpg");
+	}
+	
+	public void onTabChange(TabChangeEvent event) {
+        FacesMessage msg = new FacesMessage("Tab Changed", "Active Tab: " + event.getTab().getTitle());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+	
+	public StreamedContent getDownloadedFile() {
+		return downloadedFile;
+	}
 
 	public List<LogEntry> getLogs() {
 		return logs;
@@ -84,6 +104,9 @@ public class BusinessFLowView implements Serializable {
 		if (!validFile && newStep.equals("sendFile")) {
 			log.log(Level.WARNING, "File has not been validated. [{0}]", validFile);
 			validFile = false; // reset in case user goes back
+
+	        FacesMessage msg = new FacesMessage("Check errors");
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
 			return "reviewFile";
 		} else  {
 			log.log(Level.INFO, "Moving to [{0}]", newStep);

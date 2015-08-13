@@ -1,9 +1,14 @@
-
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui" template="/WEB-INF/templates/basicTemplate.xhtml">
 
 	<ui:define name="extraHead">
+		<style>
+.ui-layout-unit-content .ui-widget-content {
+	padding: 0px;
+	margin: 0px;
+}
+</style>
 		<script name="jquery/jquery.js" library="primefaces"></script>
 		<script>
 			function next() {
@@ -35,103 +40,86 @@
 
 
 	<ui:define name="content">
-
-		<style type="text/css">
-.ui-steps .ui-steps-item {
-	width: 25%;
-}
-
-.ui-state-highlight {
-	text-shadow: none !important;
-}
-
-.ui-steps.custom {
-	margin-bottom: 30px;
-}
-
-.ui-steps.custom .ui-steps-item .ui-menuitem-link {
-	height: 10px;
-	padding: 0 1em;
-}
-
-.ui-steps.custom .ui-steps-item .ui-steps-number {
-	background-color: #0081c2;
-	color: #FFFFFF;
-	display: inline-block;
-	width: 20px;
-	border-radius: 10px;
-	margin-top: -10px;
-	margin-bottom: 10px;
-}
-</style>
-		<!-- 
-		<h3>#{msg['flow.step0']}</h3>
-		<p:steps activeIndex="0" styleClass="custom" readonly="false" widgetVar="stepsInFlow">
-			<p:menuitem value="#{msg['flow.step1']}" url="#" onclick="goToStep(0);" icon="ui-icon-disk"/>
-			<p:menuitem value="#{msg['flow.step2']}" url="#" onclick="goToStep(1);" />
-			<p:menuitem value="#{msg['flow.step3']}" url="#" onclick="goToStep(2);" />
-			<p:menuitem value="#{msg['flow.step4']}" url="#" onclick="goToStep(3);" />
-		</p:steps>
- -->
-		<br />
-		<br />
 		<center>
 
 			<div style="width: 500px">
 				<!-- 
 				<input value="Prev" type="button" onclick="back();" /> <input value="Next" type="button" onclick="next();" />
-			 -->
+ 				-->
+				<p:growl id="growl" sticky="true" showDetail="true" />
 				<p:wizard widgetVar="wizard" showNavBar="true" flowListener="#{businessFLowView.onFlowProcess}" id="wizard">
-					<!--  -->
+
 					<p:tab id="uploadFile" title="#{msg['flow.step1']}">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="#{msg['main.fileNameToUpload']}" />
+						<p:panel header="Personal Details">
+							<p:messages />
+							<p:panelGrid columns="2">
+								<p:outputLabel value="#{msg['main.fileNameToUpload']}" />
 
-							<p:fileUpload fileUploadListener="#{businessFLowView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-								update="uploadMessage" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-								<p:growl id="uploadMessage" showDetail="true" />
-							</p:fileUpload>
+								<p:fileUpload fileUploadListener="#{businessFLowView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+									update="uploadMessage" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+									<p:growl id="uploadMessage" showDetail="true" />
+								</p:fileUpload>
 
-						</p:panelGrid>
+							</p:panelGrid>
+						</p:panel>
 					</p:tab>
 					<p:tab id="reviewFile" title="#{msg['flow.step2']}">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="#{msg['main.fileNameToDownload']}" />
-							<h:outputLink value="/files/file.ext" target="_blank">link</h:outputLink>
-							<h:outputText value="#{msg['main.fileValid']}" />
-							<h:selectBooleanCheckbox value="#{businessFLowView.validFile}" />
-						</p:panelGrid>
+						<p:panel>
+							<p:messages />
+							<p:panelGrid columns="2">
+								<p:outputLabel value="#{msg['main.fileNameToDownload']}" />
+								<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);"
+									icon="ui-icon-arrowthick-1-s">
+									<p:fileDownload value="#{businessFLowView.downloadedFile}" />
+								</p:commandButton>
+								<h:outputText value="#{msg['main.fileValid']}" />
+								<h:selectBooleanCheckbox value="#{businessFLowView.validFile}" label="Firstname" />
+							</p:panelGrid>
+						</p:panel>
 					</p:tab>
 					<p:tab id="sendFile" title="#{msg['flow.step3']}">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="#{msg['flow.step2']}" />
-							<h:inputText value="#{businessFLowView.uploadedDate}"></h:inputText>
-						</p:panelGrid>
+						<p:panel>
+							<p:messages />
+							<p:panelGrid columns="2">
+								<p:outputLabel value="#{msg['flow.step2']}" />
+								<h:inputText value="#{businessFLowView.uploadedDate}" required="true" label="Firstn2ame">
+									<p:ajax event="keyup" update="grid" />
+								</h:inputText>
+							</p:panelGrid>
+						</p:panel>
 					</p:tab>
 					<p:tab id="showResponse" title="#{msg['flow.step4']}">
-						<p:panelGrid columns="2">
-							<p:outputLabel value="#{msg['flow.step3']}" />
-							<h:form enctype="multipart/form-data">
-								<h:commandButton value="Register" action="#{businessFLowView.register}" onclick="resetWizard();" ajax="true"></h:commandButton>
-							</h:form>
-						</p:panelGrid>
+						<p:panel>
+							<p:messages />
+							<p:panelGrid columns="2">
+								<p:outputLabel value="#{msg['flow.step3']}" />
+								<h:form enctype="multipart/form-data">
+									<h:commandButton value="#{msg['main.send']}" action="#{businessFLowView.register}" onclick="resetWizard();"
+										ajax="true"></h:commandButton>
+								</h:form>
+							</p:panelGrid>
+						</p:panel>
 					</p:tab>
+
 				</p:wizard>
+
 				<br /> <br />
-				<p:dataTable value="#{businessFLowView.logs}" var="logEntries">
-					<f:facet name="header">
-						<p:outputLabel value="#{msg['logPanel.title']}" />
-					</f:facet>
-					<p:column headerText="#{msg['main.log.date']}">
-						<h:outputText value="#{logEntries.date}" />
-					</p:column>
-					<p:column headerText="#{msg['main.log.event1']}">
-						<h:outputText value="#{logEntries.message}" />
-					</p:column>
-					<p:column headerText="#{msg['main.log.event2']}">
-						<h:outputText value="#{logEntries.level}" />
-					</p:column>
-				</p:dataTable>
+				<h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px">
+					<p:dataTable value="#{businessFLowView.logs}" var="logEntries" scrollable="true" scrollHeight="150">
+						<f:facet name="header">
+							<p:outputLabel value="#{msg['logPanel.title']}" />
+						</f:facet>
+						<p:column headerText="#{msg['main.log.date']}">
+							<h:outputText value="#{logEntries.date}" />
+						</p:column>
+						<p:column headerText="#{msg['main.log.event1']}">
+							<h:outputText value="#{logEntries.message}" />
+						</p:column>
+						<p:column headerText="#{msg['main.log.event2']}">
+							<h:outputText value="#{logEntries.level}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
 
 			</div>
 		</center>
