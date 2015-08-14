@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<f:view contentType="text/html" id="fview">
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title><h:outputText value="#{msg['app.name']}" /></title>
+
+	<f:metadata>
+		<ui:insert name="metadata" />
+	</f:metadata>
+	<h:head>
+		<ui:debug />
+
+	</h:head>
+	<h:body onload="PF('statusDialog').hide();">
+
+		<p:messages />
+		<h:form enctype="multipart/form-data">
+			<h:inputFile id="file" value="#{businessFLowView.file2}" />
+			<p:commandButton value="Upload" action="#{businessFLowView.handleFileUpload}" ajax="false" />
+		</h:form>
+
+	</h:body>
+</f:view>
+</html>

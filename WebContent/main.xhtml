@@ -2,27 +2,34 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:b="http://bootsfaces.net/ui" template="/WEB-INF/templates/basicTemplate.xhtml">
 	<ui:define name="content">
+		<style>
+#mainDivCenter {
+	height: 200px;
+	width: 400px;
+	position: fixed;
+	top: 50%;
+	left: 40%;
+	margin-top: -100px;
+	margin-left: -200px;
+}
+</style>
 
 		<center>
 
-			<div style="width: 500px">
+			<div style="width: 500px" id="mainDivCenter">
 				<!-- 
 				<input value="Prev" type="button" onclick="back();" /> <input value="Next" type="button" onclick="next();" />
  				-->
 				<p:growl id="growl" sticky="true" showDetail="true" />
+
 				<p:wizard widgetVar="wizard" showNavBar="true" flowListener="#{businessFLowView.onFlowProcess}" id="wizard">
 
 					<p:tab id="uploadFile" title="#{msg['flow.step1']}">
 						<p:panel header="Personal Details">
 							<p:messages />
+
 							<p:panelGrid columns="2">
-								<p:outputLabel value="#{msg['main.fileNameToUpload']}" />
-
-								<p:fileUpload fileUploadListener="#{businessFLowView.handleFileUpload}" mode="advanced" dragDropSupport="false"
-									update="uploadMessage" sizeLimit="100000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-									<p:growl id="uploadMessage" showDetail="true" />
-								</p:fileUpload>
-
+								<h:outputLink value="javascript:void(0)" onclick="PF('ex').show();" ><h:outputText value="#{msg['main.fileNameToUpload']}"/></h:outputLink>
 							</p:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -31,10 +38,8 @@
 							<p:messages />
 							<p:panelGrid columns="2">
 								<p:outputLabel value="#{msg['main.fileNameToDownload']}" />
-								
-								<b:button outcome="testButton" value="Bookmark" icon="bookmark">
-									<f:param name="testId" value="11" />
-								</b:button>
+								<p:commandButton value="Download" icon="fa fa-fw fa-download" type="button" />
+
 								<h:outputText value="#{msg['main.fileValid']}" />
 								<h:selectBooleanCheckbox value="#{businessFLowView.validFile}" />
 							</p:panelGrid>
@@ -44,10 +49,9 @@
 						<p:panel>
 							<p:messages />
 							<p:panelGrid columns="2">
-								<p:outputLabel value="#{msg['flow.step2']}" />
-								<h:inputText value="#{businessFLowView.uploadedDate}" required="true" label="#{businessFLowView.uploadedDate}">
-									<p:ajax event="keyup" update="grid" />
-								</h:inputText>
+								<p:outputLabel value="#{msg['flow.step2']}" for="date" />
+								<h:inputText value="#{businessFLowView.uploadedDate}" required="true" label="#{businessFLowView.uploadedDate}"
+									id="date" />
 							</p:panelGrid>
 						</p:panel>
 					</p:tab>
@@ -56,36 +60,22 @@
 							<p:messages />
 							<p:panelGrid columns="2">
 								<p:outputLabel value="#{msg['flow.step3']}" />
-								<h:form enctype="multipart/form-data">
-									<h:commandButton value="#{msg['main.send']}" action="#{businessFLowView.register}" onclick="resetWizard();"
-										ajax="true"></h:commandButton>
-								</h:form>
+								<h:commandButton value="#{msg['main.send']}" action="#{businessFLowView.register}" onclick="resetWizard();"
+									update="growl" ajax="true"></h:commandButton>
 							</p:panelGrid>
 						</p:panel>
 					</p:tab>
 
 				</p:wizard>
 
-				<br /> <br />
-				<h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px">
-					<p:dataTable value="#{businessFLowView.logs}" var="logEntries" scrollable="true" scrollHeight="150">
-						<f:facet name="header">
-							<p:outputLabel value="#{msg['logPanel.title']}" />
-						</f:facet>
-						<p:column headerText="#{msg['main.log.date']}">
-							<h:outputText value="#{logEntries.date}" />
-						</p:column>
-						<p:column headerText="#{msg['main.log.event1']}">
-							<h:outputText value="#{logEntries.message}" />
-						</p:column>
-						<p:column headerText="#{msg['main.log.event2']}">
-							<h:outputText value="#{logEntries.level}" />
-						</p:column>
-					</p:dataTable>
-				</h:panelGrid>
-
 			</div>
+
 		</center>
+
+		<p:dialog widgetVar="ex">
+			<iframe frameborder="0" align="left" src="uploader.xhtml" name="someName" id="popupFrame" scrolling="auto"
+				width="450" height="200" marginheight="5" marginwidth="10"> Upload File </iframe>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>
