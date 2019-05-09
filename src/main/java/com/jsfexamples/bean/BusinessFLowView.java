@@ -37,7 +37,7 @@ public class BusinessFLowView implements Serializable {
 	// private final Logger log = Logger.getLogger(this.getClass().getName());
 
 	private static final Logger log = Logger.getLogger("BusinessFLowView");
-	private static final String FILES_STORE_LOCATION = "/home/ecapati/Development/git/loginFaces/WebContent/WEB-INF/receivedFiles/";
+	private static final String FILES_STORE_LOCATION = "/home/carlospatinos/Development/git/loginFaces/WebContent/WEB-INF/receivedFiles/";
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 	private UploadedFile file;
 	private Part file2;
@@ -48,7 +48,7 @@ public class BusinessFLowView implements Serializable {
 	private List<LogEntry> logs = new ArrayList<LogEntry>();
 
 	public BusinessFLowView() {
-		String fileName = "/home/ecapati/Pictures/error.png";
+		String fileName = "/home/carlospatinos/Pictures/error.png";
 		InputStream stream = ((ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext())
 				.getResourceAsStream(fileName);
 		log.log(Level.INFO, "File to download is [{0}] size [{1}].", new Object[] { fileName, "500k" });
